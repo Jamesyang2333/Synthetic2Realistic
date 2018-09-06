@@ -44,8 +44,8 @@ class CreateDataset(data.Dataset):
                 lab_target_path = self.lab_target_paths[index]
             else:
                 raise ValueError('Data mode [%s] is not recognized' % self.opt.dataset_mode)
-            lab_source = Image.open(lab_source_path)#.convert('RGB')
-            lab_target = Image.open(lab_target_path)#.convert('RGB')
+            lab_source = Image.open(lab_source_path).convert('RGB')
+            lab_target = Image.open(lab_target_path).convert('RGB')
             lab_source = lab_source.resize([self.opt.loadSize[0], self.opt.loadSize[1]], Image.BICUBIC)
             lab_target = lab_target.resize([self.opt.loadSize[0], self.opt.loadSize[1]], Image.BICUBIC)
 
