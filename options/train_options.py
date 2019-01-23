@@ -7,9 +7,9 @@ class TrainOptions(BaseOptions):
         # training epoch
         self.parser.add_argument('--epoch_count', type=int, default=1,
                                  help='the starting epoch count')
-        self.parser.add_argument('--niter', type=int, default=10,
+        self.parser.add_argument('--niter', type=int, default=6,
                                  help='# of iter with initial learning rate')
-        self.parser.add_argument('--niter_decay', type=int, default=10,
+        self.parser.add_argument('--niter_decay', type=int, default=4,
                                  help='# of iter to decay learning rate to zero')
         self.parser.add_argument('--continue_train', action='store_true',
                                  help='continue training: load the latest model')
@@ -28,7 +28,7 @@ class TrainOptions(BaseOptions):
                                  help='weight for image reconstruction loss')
         self.parser.add_argument('--lambda_gan_img', type=float, default=1.0,
                                  help='weight for image GAN loss')
-        self.parser.add_argument('--lambda_gan_feature', type=float, default=1.0,
+        self.parser.add_argument('--lambda_gan_feature', type=float, default=0.1,
                                  help='weight for feature GAN loss')
         self.parser.add_argument('--lambda_rec_lab', type=float, default=100.0,
                                  help='weight for task loss')
@@ -48,7 +48,7 @@ class TrainOptions(BaseOptions):
         # others
         self.parser.add_argument('--separate', action='store_true',
                                  help='transform and task network training end-to-end or separate')
-        self.parser.add_argument('--pool_size', type=int, default=50,
+        self.parser.add_argument('--pool_size', type=int, default=20,
                                  help='the size of image buffer that stores previously generated images')
 
         self.isTrain = True

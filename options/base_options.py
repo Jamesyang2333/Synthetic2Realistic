@@ -44,7 +44,7 @@ class BaseOptions():
                                  help='if specified, crop the images for data augmentation')
         self.parser.add_argument('--batchSize', type=int, default=6,
                                  help='input batch size')
-        self.parser.add_argument('--nThreads', type=int, default=8,
+        self.parser.add_argument('--nThreads', type=int, default=2,
                                  help='# threads for loading data')
         self.parser.add_argument('--shuffle', action='store_true',
                                  help='if true, takes images randomly')
@@ -61,7 +61,7 @@ class BaseOptions():
                                  help='the max channels for image features')
         self.parser.add_argument('--num_D', type=int, default=1,
                                  help='# of number of the discriminator')
-        self.parser.add_argument('--transform_layers', type=int, default=6,
+        self.parser.add_argument('--transform_layers', type=int, default=9,
                                  help='# of number of the down sample layers for transform network')
         self.parser.add_argument('--task_layers', type=int, default=4,
                                  help='# of number of the down sample layers for task network')

@@ -103,11 +103,12 @@ def _freeze(*args):
                 p.requires_grad = False
 
 
-def __unfreeze(*args):
+def _unfreeze(*args):
     for module in args:
         if module:
             for p in module.parameters():
                 p.requires_grad = True
+
 
 # define the generator(transform, task) network
 def define_G(input_nc, output_nc, ngf=64, layers=4, norm='batch', activation='PReLU', model_type='UNet',
@@ -123,6 +124,7 @@ def define_G(input_nc, output_nc, ngf=64, layers=4, norm='batch', activation='PR
 
     return init_net(net, init_type, gpu_ids)
 
+
 # define the discriminator network
 def define_D(input_nc, ndf = 64, n_layers = 3, num_D = 1, norm = 'batch', activation = 'PReLU', init_type='xavier', gpu_ids = []):
 
@@ -137,6 +139,7 @@ def define_featureD(input_nc, n_layers=2, norm='batch', activation='PReLU', init
     net = _FeatureDiscriminator(input_nc, n_layers, norm, activation, gpu_ids)
 
     return init_net(net, init_type, gpu_ids)
+
 
 ######################################################################################
 # Basic Operation
@@ -174,7 +177,6 @@ class _InceptionBlock(nn.Module):
             nn.ReflectionPad2d(1),
             nn.Conv2d(output_nc * width, output_nc, kernel_size=3, padding=0, bias=use_bias)
         )
-
 
     def forward(self, x):
         result = []
@@ -306,16 +308,14 @@ class _ResGenerator(nn.Module):
             nonlinearity
         ]
 
-        n_downsampling = 1
+        n_downsampling = 2
         mult = 1
         for i in range(n_downsampling):
             mult_prev = mult
             mult = min(2 ** (i+1), 2)
             encoder += [
-                nn.ReflectionPad2d(1),
-                nn.Conv2d(ngf*mult_prev, ngf*mult, kernel_size=3, stride=2, padding=0, bias=use_bias),
-                norm_layer(ngf*mult),
-                nonlinearity
+                _EncoderBlock(ngf * mult_prev, ngf*mult, ngf*mult, norm_layer, nonlinearity, use_bias),
+                nn.AvgPool2d(kernel_size=2, stride=2)
             ]
 
         mult = min(2 ** n_downsampling, 2)
@@ -440,6 +440,7 @@ class _PreUNet16(nn.Module):
         result.append(output1)
 
         return result
+
 
 class _UNetGenerator(nn.Module):
     def __init__(self, input_nc, output_nc, ngf=64, layers=4, norm='batch', activation='PReLU', drop_rate=0, add_noise=False, gpu_ids=[],

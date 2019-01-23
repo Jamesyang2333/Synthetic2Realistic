@@ -1,5 +1,5 @@
 # Synthetic2Realistic
-This repository implements the training and testing of T2Net for "[T2Net: Synthetic-to-Realistic Translation for Depth Estimation Tasks](https://arxiv.org/abs/1808.01454)" by Chuanxia Zheng, [Tat-Jen Cham](http://www.ntu.edu.sg/home/astjcham/) and [Jianfei Cai](http://www.ntu.edu.sg/home/asjfcai/) at NTU. A video is available on [YouTube](https://youtu.be/B6lOToIk0xY). The repository offers the original implementation of the paper in Pytoch.
+This repository implements the training and testing of T2Net for "[T2Net: Synthetic-to-Realistic Translation for Depth Estimation Tasks](https://arxiv.org/abs/1808.01454)" by [Chuanxia Zheng](https://lyndonzheng.github.io/), [Tat-Jen Cham](http://www.ntu.edu.sg/home/astjcham/) and [Jianfei Cai](http://www.ntu.edu.sg/home/asjfcai/) at NTU. A video is available on [YouTube](https://youtu.be/B6lOToIk0xY). The repository offers the implementation of the paper in Pytoch.
 
 - Outdoor Translation
 
@@ -8,6 +8,10 @@ This repository implements the training and testing of T2Net for "[T2Net: Synthe
 - Indoor Translation
 
 <img src='Image/image2depth_syn2real_indoor.jpg' align="center">
+
+- Extension (WS-GAN, unpaired Image-to-Image Translation, horse2zebra)
+
+<img src='Image/horse2zebra.png' align="center">
 
 This repository can be used for training and testing of
 - Unpaired image-to-image Translation
@@ -39,10 +43,10 @@ The outdooe Synthetic Dataset is [vKITTI](http://www.europe.naverlabs.com/Resear
 - Train a model with multi-domain datasets:
 
 ```
-python train.py train.py --name Outdoor_nyu_wsupervised --model wsupervised
---img_source_file /dataset/Image2Depth31_KITTI/trainA_SYN80.txt
+python train.py --name Outdoor_nyu_wsupervised --model wsupervised
+--img_source_file /dataset/Image2Depth31_KITTI/trainA_SYN.txt
 --img_target_file /dataset/Image2Depth31_KITTI/trainA.txt
---lab_source_file /dataset/Image2Depth31_KITTI/trainB_SYN80.txt
+--lab_source_file /dataset/Image2Depth31_KITTI/trainB_SYN.txt
 --lab_target_file /dataset/Image2Depth31_KITTI/trainB.txt
 --shuffle --flip --rotation
 ```
@@ -59,17 +63,31 @@ python test.py --name Outdoor_nyu_wsupervised --model test
 --img_target_file /dataset/Image2Depth31_KITTI/testA
 ```
 
-## Trined Models
+## Estimation
+- Depth Estimation, the code based on [monodepth](https://github.com/mrharicot/monodepth)
+```
+python evaluation.py --split eigen --file_path ./datasplit/
+--gt_path ''your path''/KITTI/raw_data_KITTI/
+--predicted_depth_path ''your path''/result/KITTI/predicted_depth_vk
+--garg_crop
+```
 
-More trained models will be released
+## Trained Models
+
+The pretrained model for [indoor scene weakly wsupervised](https://drive.google.com/drive/folders/197clhZvX8zHQxZXkkBasrx4SUKyUzscT?usp=sharing).
+
+The pretrained model for [outdoor scene weakly wsupervised](https://drive.google.com/open?id=1jHrIPP1PsVl6P5zJpZ5VQZB07YHdW-cT)
+
+Note: Since our orginal model in the paper trained on single-GPU, this pretrained model is for multi-GPU version.
 
 ## Citation
 If you use this code for your research, please cite our papers.
 ```
-@article{zheng2018t2net,
+@inproceedings{zheng2018t2net,
   title={T2Net: Synthetic-to-Realistic Translation for Solving Single-Image Depth Estimation Tasks},
   author={Zheng, Chuanxia and Cham, Tat-Jen and Cai, Jianfei},
-  journal={arXiv preprint arXiv:1808.01454},
+  booktitle={Proceedings of the European Conference on Computer Vision (ECCV)},
+  pages={767--783},
   year={2018}
 }
 
