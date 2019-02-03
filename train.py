@@ -23,6 +23,7 @@ for epoch in range(opt.epoch_count, opt.niter+opt.niter_decay+1):
         print(i)
         print(type(data))
         print(type(data['img_source']))
+        print(data['img_source'].shape)
         iter_start_time = time.time()
         total_steps += opt.batchSize
         epoch_iter += opt.batchSize
