@@ -20,6 +20,8 @@ for epoch in range(opt.epoch_count, opt.niter+opt.niter_decay+1):
 
     # training
     for i, data in enumerate(dataset):
+        print(i)
+        print(data)
         iter_start_time = time.time()
         total_steps += opt.batchSize
         epoch_iter += opt.batchSize
