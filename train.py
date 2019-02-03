@@ -22,7 +22,7 @@ for epoch in range(opt.epoch_count, opt.niter+opt.niter_decay+1):
     for i, data in enumerate(dataset):
         print(i)
         print(type(data))
-        print(type(data['image_source']))
+        print(type(data['img_source']))
         iter_start_time = time.time()
         total_steps += opt.batchSize
         epoch_iter += opt.batchSize
